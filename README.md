@@ -29,6 +29,13 @@ sudo ln -s $(which riscv64-unknown-elf-objcopy) /usr/bin/riscv32-unknown-elf-obj
 - **gcc-riscv64-unknown-elf** → compilador cruzado para ensamblador RISC-V.  
 
 ---
+## Clonar github
+
+a continuacion se clona el repositorio github para poder empezar a trabajar en el
+```bash
+git clone https://github.com/cicamargoba/digital_UN.git
+
+```
 
 ## 🛠️ Uso
 
@@ -64,6 +71,7 @@ Para ejecutar la simulación del módulo de simulacion **quark**:
 cd femtoRV/rtl
 make sim_quark
 ```
+
 
 El flujo realizará lo siguiente:
 1. Compilar los archivos Verilog con **Icarus Verilog**.  
