@@ -44,7 +44,7 @@ git clone https://github.com/cicamargoba/digital_UN.git
 Para compilar los programas en ensamblador:
 
 ```bash
-cd femtoRV/basic/firmware/asm
+cd digital_UN/femtoRV/basic/firmware/asm
 ```
 ahora podemos agregar nuestro archivo .S para poder ejecutarlo, cambiamos las variables del makefile OBJECTS y OBJS
 ### Ejemplos
