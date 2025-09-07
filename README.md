@@ -21,6 +21,7 @@ sudo ln -s $(which riscv64-unknown-elf-gcc) /usr/bin/riscv32-unknown-elf-gcc
 sudo ln -s $(which riscv64-unknown-elf-ld) /usr/bin/riscv32-unknown-elf-ld
 sudo ln -s $(which riscv64-unknown-elf-objdump) /usr/bin/riscv32-unknown-elf-objdump
 sudo ln -s $(which riscv64-unknown-elf-objcopy) /usr/bin/riscv32-unknown-elf-objcopy
+sudo ln -s $(which riscv64-unknown-elf-as)  /usr/bin/riscv32-unknown-elf-as
 ```
 
 - **iverilog** → compilador y simulador de Verilog (Icarus Verilog).  
