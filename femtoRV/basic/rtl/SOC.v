@@ -35,11 +35,8 @@ module SOC (
       .mem_wmask({4{cs[0]}}&mem_wmask)
    );
    wire [31:0] uart_dout;
-   wire [31:0] gpio_dout;
    wire [31:0] mult_dout;
    wire [31:0] div_dout;
-   wire [31:0] bin2bcd_dout;
-   wire [31:0] dpram_dout;
 
 
   peripheral_uart #(
@@ -115,12 +112,12 @@ module SOC (
   always @*
   begin
       case (cs)
-        7'b1000000: mem_rdata = dpram_dout;
+//        7'b1000000: mem_rdata = dpram_dout;
         7'b0100000: mem_rdata = uart_dout;
-        7'b0010000: mem_rdata = gpio_dout;
+//        7'b0010000: mem_rdata = gpio_dout;
         7'b0001000: mem_rdata = mult_dout;
         7'b0000100: mem_rdata = div_dout;
-        7'b0000010: mem_rdata = bin2bcd_dout;
+//        7'b0000010: mem_rdata = bin2bcd_dout;
         7'b0000001: mem_rdata = RAM_rdata;
       endcase
   end

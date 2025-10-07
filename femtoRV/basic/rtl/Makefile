@@ -5,10 +5,15 @@ EFXPT_HOME    = $(EFINITY_HOME)/pt
 TARGET=SOC
 TOP=SOC
 
-ICE40_SIM_CELLS=$(shell yosys-config --datdir/ecp5/cells_sim.v)
+ECP5_SIM_CELLS  = $(shell yosys-config --datdir/ecp5/cells_sim.v)
+ECP5_SIM_CELLS += $(shell yosys-config --datdir/ecp5/cells_bb.v)
+#ECP5_SIM_CELLS += $(shell yosys-config --datdir/ecp5/cells_map.v)
+
+EFINIX_SIM_CELLS   = sim_models_efx/efx_ff.v  sim_models_efx/efx_dpram_5k.v sim_models_efx/efx_ram_5k.v sim_models_efx/efx_lut4.v sim_models_efx/efx_add.v sim_models_efx/efx_gbufce.v 
+ICE40_SIM_CELLS=$(shell yosys-config --datdir/ice40/cells_sim.v)
 
 
-COMM_OBJS= cores/cpu/femtorv32_quark.v
+COMM_OBJS= cores/cpu/femtorv32_quark_V2.v
 COMM_OBJS+= cores/uart/perip_uart.v
 COMM_OBJS+= cores/uart/uart.v
 COMM_OBJS+= cores/mult/perip_mult.v
@@ -37,15 +42,9 @@ $(TARGET).fs:
 ${TARGET}.svf : ${TARGET}.bit
 
 
-sim: 
-	rm -f a.out *.vcd
-	iverilog -DBENCH -DSIM -DPASSTHROUGH_PLL -DBOARD_FREQ=27 -DCPU_FREQ=27 bench_iverilog.v soc_femto.v
-	vvp a.out
-	gtkwave bench.vcd
-
 sim_quark:
 	rm -f a.out *.vcd
-	iverilog -DBENCH -DSIM -DPASSTHROUGH_PLL -DBOARD_FREQ=27 -DCPU_FREQ=27  bench_quark.v $(OBJS)
+	iverilog -DBENCH  bench_quark.v $(OBJS)
 	vvp a.out
 	gtkwave bench.vcd
 
@@ -65,12 +64,22 @@ sim_verilator:
 ## post-synth simulation
 ## ---------------------
 sim_post_syn_quark:  $(OBJS)
-	#yosys -v3 -l synth.log -p 'synth_ecp5 -top $(TOP) -json $(TOP).json; write_verilog -attr2comment $(TOP)_synth.v' $(OBJS)
-	yosys -v3 -l synth.log -p ' synth_ecp5 -top $(TOP) -json $(TOP).json; write_verilog -attr2comment $(TOP)_synth.v' ${OBJS}
-	iverilog -DSYNTH -o $@_PS.vpp   bench_quark.v $(TOP)_synth.v $(ICE40_SIM_CELLS)
+	rm -f *vpp
+
+#	yosys -v3 -p  'abc -dff; read_verilog $(OBJS); abc -keepff ;  synth_ecp5  -top $(TARGET); write_verilog $(TOP)_synth.v' -l ${TARGET}.rpt
+#	iverilog -g2012 -DSYNTH -o $@_PS.vpp -s bench  bench_quark.v $(TOP)_synth.v $(ECP5_SIM_CELLS)
+	yosys -v3  -p ' read_verilog $(OBJS);  synth_ice40  -top $(TARGET); write_verilog $(TOP)_synth.v' -l ${TARGET}.rpt
+	iverilog -g2012 -DSYNTH -o $@_PS.vpp -s bench  bench_quark.v $(TOP)_synth.v $(ICE40_SIM_CELLS)
 
 	vvp $@_PS.vpp
 	gtkwave bench.vcd &
+
+sim_post_syn_quark_efx:  $(OBJS)
+	rm -f *vpp *.vcd
+	yosys -v3 -l synth.log -p ' synth_efinix -top SOC -json $(TOP).json; write_verilog -attr2comment $(TOP)_synth.v' ${OBJS}
+	iverilog -DSYNTH -o $@_PS.vpp -s $(TARGET)_TB $(TARGET)_TB.v $(TOP)_synth.v $(EFINIX_SIM_CELLS) 
+	vvp $@_PS.vpp
+	gtkwave $(TARGET)_TB.vcd
   	
 svg: $(OBJS)
 	yosys -p "prep -top ${TARGET}; write_json ${TARGET}.json" -DPASSTHROUGH_PLL -DBOARD_FREQ=27 -DCPU_FREQ=27  ${OBJS}
