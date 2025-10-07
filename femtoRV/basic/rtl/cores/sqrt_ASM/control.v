@@ -25,17 +25,7 @@ module control_sqrt( clk , rst , init, msb, z, done, ld_tmp, r0, sh, ld, lda2);
 
  
  reg [2:0] state;
- 
- initial begin
-  done   = 0; 
-  ld_tmp = 0; 
-  r0     = 0; 
-  sh     = 0; 
-  ld     = 0; 
-  lda2   = 0; 
- end
-
-reg [3:0] count;
+ reg [3:0] count;
 
 always @(posedge clk) begin
   if (rst) begin
