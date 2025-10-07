@@ -9,25 +9,13 @@ module sqrt_TB;
    wire done;
    sqrt uut (.clk(clk) , .rst(rst) , .init(start) , .A(A) , .result(result) , .done(done));
 
- 
    parameter PERIOD          = 20;
    parameter real DUTY_CYCLE = 0.5;
    parameter OFFSET          = 0;
    reg [20:0] i;
-	event reset_trigger;
-	event reset_done_trigger;
-	initial begin 
-	  forever begin 
-	   @ (reset_trigger);
-		@ (negedge clk);
-		rst = 1;
-		@ (negedge clk);
-		rst = 0;
-		-> reset_done_trigger;
-		end
-	end
+
    initial begin  // Initialize Inputs
-      clk = 0; start = 0; A = 16'h0190;
+      clk = 0; rst = 0; start = 0; A = 16'h0441;
    end
    initial  begin  // Process for clk
      #OFFSET;
@@ -39,8 +27,10 @@ module sqrt_TB;
        end
    end
    initial begin // Reset the system, Start the image capture process
-        #10 -> reset_trigger;
-        @ (reset_done_trigger);
+        @ (negedge clk);
+        rst = 1;
+        @ (negedge clk);
+        rst = 0;
         @ (posedge clk);
         start = 0;
         @ (posedge clk);

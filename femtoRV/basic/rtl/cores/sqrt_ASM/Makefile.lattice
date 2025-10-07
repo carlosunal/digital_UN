@@ -3,7 +3,7 @@ TOP    = sqrt
 
 ICE40_SIM_CELLS=$(shell yosys-config --datdir/ice40/cells_sim.v)
 
-OBJS     = addc2.v  cells_sim.v  control.v  count.v  lsr2.v  lsr.v  sqrt.v
+OBJS     = addc2.v  control.v  count.v  lsr2.v  lsr.v  sqrt.v
 SIM_OBJS =  ../../verilog_model/sky130_fd_sc_hd.v
 SIM_OBJS += ../../verilog_model/primitives.v
 
@@ -20,7 +20,7 @@ sim:
 	gtkwave $(TARGET)_TB.vcd
 sim_per:
 	rm -f a.out *.vcd
-	iverilog -DBENCH -DSIM -DPASSTHROUGH_PLL -DBOARD_FREQ=27 -DCPU_FREQ=27  perip_$(TARGET)_TB.v $(PER_OBJS)
+	iverilog -DBENCH   perip_$(TARGET)_TB.v $(PER_OBJS)
 	vvp a.out
 	gtkwave perip_$(TARGET)_TB.vcd &
 $(TOP).json:

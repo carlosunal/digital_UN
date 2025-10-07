@@ -10,7 +10,7 @@ module count (clk , ld, dec, z);
 
 always @(negedge clk) begin
   if (ld) 
-    cont  <= 4'b1001; //8
+    cont  <= 4'b1000; //8
   else begin
     if (dec) 
       cont  <= cont-1;

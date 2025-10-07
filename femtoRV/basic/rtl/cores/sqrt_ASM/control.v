@@ -20,7 +20,9 @@ module control_sqrt( clk , rst , init, msb, z, done, ld_tmp, r0, sh, ld, lda2);
  parameter SHIFT_DEC = 3'b010;
  parameter LOAD_TMP  = 3'b011;
  parameter LOAD_A2   = 3'b100;
- parameter END1      = 3'b101;
+ parameter CHECK_Z   = 3'b101;
+ parameter END1      = 3'b110;
+
  
  reg [2:0] state;
  
@@ -59,17 +61,19 @@ always @(posedge clk) begin
 
 
     CHECK: begin
-      if (z)
-        state = END1;
-      else begin
-        if(msb)
-          state = SHIFT_DEC;
-        else
-          state = LOAD_A2;
-      end
+      if (msb)
+        state = CHECK_Z;
+      if (!msb)
+        state = LOAD_A2;
+
     end
 
     LOAD_A2: begin
+      state = CHECK_Z;
+    end
+
+
+    CHECK_Z: begin
       if (z)
         state = END1;
       else
@@ -131,6 +135,15 @@ always @(*) begin
       sh     = 0; 
       ld     = 0; 
       lda2   = 1; 
+    end
+
+    CHECK_Z: begin
+      done   = 0; 
+      ld_tmp = 0; 
+      r0     = 0; 
+      sh     = 0; 
+      ld     = 0; 
+      lda2   = 0; 
     end
 
     END1: begin
