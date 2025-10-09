@@ -3,7 +3,7 @@ module lsr (clk , in_A , shift , load , s_A);
   input [15:0]in_A;
   input load;
   input shift;
-  output reg [30:0]s_A;
+  output reg [31:0]s_A;
 
 always @(negedge clk)
   if(load)

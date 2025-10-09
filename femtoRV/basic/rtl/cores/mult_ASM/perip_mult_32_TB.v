@@ -12,6 +12,7 @@ module peripheral_mult_TB;
    reg wr;
    wire [31:0]d_out;
 
+
 	peripheral_mult uut (
 		.clk(clk), 
 		.reset(reset), 
@@ -78,7 +79,7 @@ module peripheral_mult_TB;
 	 
 
    initial begin: TEST_CASE
-     $dumpfile("perip_mult_TB.vcd");
+     $dumpfile("perip_mult_32_TB.vcd");
      $dumpvars(-1, peripheral_mult_TB);
      #(PERIOD*50) $finish;
    end
