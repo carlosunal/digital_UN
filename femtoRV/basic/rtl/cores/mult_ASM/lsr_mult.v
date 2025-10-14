@@ -1,4 +1,4 @@
-module lsr (clk , in_A , shift , load , s_A);
+module lsr_mult (clk , in_A , shift , load , s_A);
   input clk;
   input [15:0]in_A;
   input load;

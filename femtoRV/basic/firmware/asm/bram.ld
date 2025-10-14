@@ -6,7 +6,7 @@ SECTIONS
     everything :
     {
         . = ALIGN(4);
-        calculator.o (.text)
+        mult_32.o (.text)
         *(.*)
     } >BRAM
 }

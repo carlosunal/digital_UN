@@ -37,7 +37,7 @@ module SOC (
    wire [31:0] uart_dout;
    wire [31:0] mult_dout;
    wire [31:0] div_dout;
-
+   wire [31:0] sqrt_dout;
 
   peripheral_uart #(
      .clk_freq(26000000),    // 27000000 for gowin 33333333 for efinix
@@ -47,7 +47,7 @@ module SOC (
      .rst(!resetn), 
      .d_in(mem_wdata), 
      .cs(cs[5]), 
-     .addr(mem_addr[4:0]), 
+     .addr(mem_addr[4:0]),
      .rd(rd), 
      .wr(wr), 
      .d_out(uart_dout), 
@@ -56,28 +56,40 @@ module SOC (
      .ledout(LEDS)
    ); 
 
-	peripheral_mult mult1 (
-		.clk(clk), 
-		.reset(!resetn), 
-		.d_in(mem_wdata[15:0]), 
-		.cs(cs[3]), 
-		.addr(mem_addr[4:0]), 
-		.rd(rd), 
-		.wr(wr), 
-		.d_out(mult_dout) 
-	);
+   peripheral_mult mult1 (
+      .clk(clk),
+      .reset(!resetn),
+      .d_in(mem_wdata[15:0]),
+      .cs(cs[3]),
+      .addr(mem_addr[4:0]),
+      .rd(rd),
+      .wr(wr),
+      .d_out(mult_dout)
+   );
 
    peripheral_div div1 (
-      .clk (clk), 
-      .reset (!resetn), 
-      .d_in (mem_wdata[15:0]), 
+      .clk (clk),
+      .reset (!resetn),
+      .d_in (mem_wdata[15:0]),
       .cs (cs[2]), 
-      .addr (mem_addr[4:0]), 
+      .addr (mem_addr[4:0]),
       .rd (rd), 
       .wr(wr), 
       .d_out (div_dout) );
 
-   
+
+
+   peripheral_sqrt sqrt1(
+      .clk(clk) ,
+      .reset (!resetn),
+      .d_in (mem_wdata[15:0]),
+      .cs (cs[4]),
+      .addr (mem_addr[4:0]),
+      .rd (rd),
+      .wr (wr),
+      .d_out (sqrt_dout) );
+
+
 /*
    peripheral_dpram dpram_p0( 
       .clk(clk),
@@ -99,13 +111,13 @@ module SOC (
   begin
       case (mem_addr[31:16])	// direcciones - chip_select
         16'h0040: cs= 7'b0100000; 	//uart
-        16'h0041: cs= 7'b0010000;	//gpio
+        16'h0041: cs= 7'b0010000;	//sqrt
         16'h0042: cs= 7'b0001000;	//mult
         16'h0043: cs= 7'b0000100;	//div
         16'h0044: cs= 7'b0000010;	//bin_to_bcd
         16'h0045: cs= 7'b1000000;   //dpRAM
-        16'h0000:  cs= 7'b0000001;    //RAM   
-        default:    cs= 7'b0000001;       
+        16'h0000: cs= 7'b0000001;    //RAM   
+        default:  cs= 7'b0000001;       
       endcase
   end
   // ============== MUX ========================  // se encarga de lecturas del RV32
@@ -114,7 +126,7 @@ module SOC (
       case (cs)
 //        7'b1000000: mem_rdata = dpram_dout;
         7'b0100000: mem_rdata = uart_dout;
-//        7'b0010000: mem_rdata = gpio_dout;
+        7'b0010000: mem_rdata = sqrt_dout;
         7'b0001000: mem_rdata = mult_dout;
         7'b0000100: mem_rdata = div_dout;
 //        7'b0000010: mem_rdata = bin2bcd_dout;

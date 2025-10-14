@@ -16,10 +16,31 @@ ICE40_SIM_CELLS=$(shell yosys-config --datdir/ice40/cells_sim.v)
 COMM_OBJS= cores/cpu/femtorv32_quark_V2.v
 COMM_OBJS+= cores/uart/perip_uart.v
 COMM_OBJS+= cores/uart/uart.v
-COMM_OBJS+= cores/mult/perip_mult.v
-COMM_OBJS+= cores/mult/mult.v
+
+
+
+COMM_OBJS+= cores/mult_ASM/perip_mult.v
+COMM_OBJS+= cores/mult_ASM/mult_32.v
+COMM_OBJS+= cores/mult_ASM/acc.v
+COMM_OBJS+= cores/mult_ASM/comp.v
+COMM_OBJS+= cores/mult_ASM/lsr_mult.v
+COMM_OBJS+= cores/mult_ASM/control_mult.v
+COMM_OBJS+= cores/mult_ASM/rsr.v
+
+
 COMM_OBJS+= cores/div/perip_div.v
 COMM_OBJS+= cores/div/div.v
+
+
+COMM_OBJS+= cores/sqrt_ASM/addc2.v
+COMM_OBJS+= cores/sqrt_ASM/count.v
+COMM_OBJS+= cores/sqrt_ASM/lsr.v 
+COMM_OBJS+= cores/sqrt_ASM/perip_sqrt.v
+COMM_OBJS+= cores/sqrt_ASM/sqrt.v
+COMM_OBJS+= cores/sqrt_ASM/lsr2.v
+COMM_OBJS+= cores/sqrt_ASM/control.v
+
+
 
 OBJS =  SOC.v
 OBJS += cores/bram/bram.v
@@ -66,10 +87,11 @@ sim_verilator:
 sim_post_syn_quark:  $(OBJS)
 	rm -f *vpp
 
-#	yosys -v3 -p  'abc -dff; read_verilog $(OBJS); abc -keepff ;  synth_ecp5  -top $(TARGET); write_verilog $(TOP)_synth.v' -l ${TARGET}.rpt
-#	iverilog -g2012 -DSYNTH -o $@_PS.vpp -s bench  bench_quark.v $(TOP)_synth.v $(ECP5_SIM_CELLS)
-	yosys -v3  -p ' read_verilog $(OBJS);  synth_ice40  -top $(TARGET); write_verilog $(TOP)_synth.v' -l ${TARGET}.rpt
-	iverilog -g2012 -DSYNTH -o $@_PS.vpp -s bench  bench_quark.v $(TOP)_synth.v $(ICE40_SIM_CELLS)
+#	         yosys -v3 -p  'abc -dff; read_verilog $(OBJS); abc -keepff ;  synth_ecp5  -top $(TARGET); write_verilog $(TOP)_synth.v' -l ${TARGET}.rpt
+	yosys -v3 -l synth.log -p ' synth_ecp5 -top $(TOP) -json $(TOP).json; write_verilog -attr2comment $(TOP)_synth.v' ${OBJS}
+	iverilog -g2012 -DSYNTH -o $@_PS.vpp -s bench  bench_quark.v $(TOP)_synth.v $(ECP5_SIM_CELLS)
+#	yosys -v3  -p ' read_verilog $(OBJS);  synth_ice40  -top $(TARGET); write_verilog $(TOP)_synth.v' -l ${TARGET}.rpt
+#	iverilog -g2012 -DSYNTH -o $@_PS.vpp -s bench  bench_quark.v $(TOP)_synth.v $(ICE40_SIM_CELLS)
 
 	vvp $@_PS.vpp
 	gtkwave bench.vcd &
