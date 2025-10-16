@@ -1,17 +1,18 @@
 [*]
 [*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
-[*] Tue Oct 14 17:33:03 2025
+[*] Thu Oct 16 01:58:53 2025
 [*]
 [dumpfile] "/Work/Embedded/digital_UN/femtoRV/basic/rtl/bench.vcd"
-[dumpfile_mtime] "Tue Oct 14 17:31:52 2025"
-[dumpfile_size] 27947578
+[dumpfile_mtime] "Thu Oct 16 01:58:47 2025"
+[dumpfile_size] 28182751
 [savefile] "/Work/Embedded/digital_UN/femtoRV/basic/rtl/test_cpu_load.gtkw"
 [timestart] 0
-[size] 1920 1001
+[size] 1648 951
 [pos] -1 -1
-*-9.770798 2580 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-9.770798 3380 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] bench.
 [treeopen] bench.uut.
+[treeopen] bench.uut.bin2bcd0.
 [treeopen] bench.uut.CPU.
 [treeopen] bench.uut.div1.
 [treeopen] bench.uut.mult1.
@@ -20,7 +21,7 @@
 [sst_width] 462
 [signals_width] 346
 [sst_expanded] 1
-[sst_vpaned_height] 426
+[sst_vpaned_height] 608
 @28
 bench.uut.resetn
 @c00028
@@ -358,9 +359,8 @@ bench.uut.mult1.s[4:0]
 @28
 bench.uut.div1.rd
 bench.uut.div1.done
-@23
-bench.uut.mult1.d_out[31:0]
 @22
+bench.uut.mult1.d_out[31:0]
 bench.uut.mult1.result[31:0]
 @200
 -
@@ -385,5 +385,19 @@ bench.uut.sqrt1.init
 bench.uut.sqrt1.done
 @22
 bench.uut.sqrt1.result[15:0]
+@200
+-
+-BIN2BCD
+@22
+bench.uut.bin2bcd0.A[15:0]
+bench.uut.bin2bcd0.addr[4:0]
+@28
+bench.uut.bin2bcd0.cs
+bench.uut.bin2bcd0.wr
+bench.uut.bin2bcd0.rd
+bench.uut.bin2bcd0.init
+bench.uut.bin2bcd0.done
+@23
+bench.uut.bin2bcd0.result[19:0]
 [pattern_trace] 1
 [pattern_trace] 0

@@ -11,8 +11,9 @@
 #OBJECTS =  bin_to_bcd.o sqrt.o mult.o div.o wait.o putchar.o getchar.o calculator.o #hello.o 
 #OBJS =  calculator.o #cambiar por todas las unidades .o del proyecto
 
-OBJS    = mult_32.o # cambiar por el main del proyecto
-OBJECTS = mult_32.o
+OBJS    = bin2bcd.o # cambiar por el main del proyecto
+OBJECTS = bin2bcd.o
+
 
 CROSS   = riscv32-unknown-elf
 CC      = $(CROSS)-gcc

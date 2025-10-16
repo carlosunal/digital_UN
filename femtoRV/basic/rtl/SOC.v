@@ -38,6 +38,7 @@ module SOC (
    wire [31:0] mult_dout;
    wire [31:0] div_dout;
    wire [31:0] sqrt_dout;
+   wire [31:0] bin2bcd_dout;
 
   peripheral_uart #(
      .clk_freq(26000000),    // 27000000 for gowin 33333333 for efinix
@@ -90,18 +91,18 @@ module SOC (
       .d_out (sqrt_dout) );
 
 
-/*
-   peripheral_dpram dpram_p0( 
+	peripheral_bin2bcd bin2bcd0 (
       .clk(clk),
-      .reset(!resetn),
+      .reset(!reset),
       .d_in(mem_wdata[15:0]),
-      .cs(cs[6]),
-      .addr(mem_addr[15:0]),
+      .cs(cs[1]),
+      .addr(mem_addr[4:0]), // 4 LSB from j1_io_addr
       .rd(rd),
       .wr(wr),
-      .d_out(dpram_dout)
-  );
-*/
+      .d_out(bin2bcd_dout)
+	);
+
+
   // ============== Chip_Select (Addres decoder) ======================== 
   // se hace con los 8 bits mas significativos de mem_addr
   // Se asigna el rango de la memoria de programa 0x00000000 - 0x003FFFFF

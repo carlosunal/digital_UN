@@ -6,7 +6,7 @@ SECTIONS
     everything :
     {
         . = ALIGN(4);
-        mult_32.o (.text)
+        bin2bcd.o (.text)
         *(.*)
     } >BRAM
 }

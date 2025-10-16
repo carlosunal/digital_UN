@@ -41,6 +41,16 @@ COMM_OBJS+= cores/sqrt_ASM/lsr2.v
 COMM_OBJS+= cores/sqrt_ASM/control.v
 
 
+COMM_OBJS+=cores/bin2bcd/add_sub_c2.v
+COMM_OBJS+=cores/bin2bcd/bin2bcd.v
+COMM_OBJS+=cores/bin2bcd/mux2.v
+COMM_OBJS+=cores/bin2bcd/count.v
+COMM_OBJS+=cores/bin2bcd/ctrl_b2b.v  
+COMM_OBJS+=cores/bin2bcd/perip_bin2bcd.v
+COMM_OBJS+=cores/bin2bcd/lsr4.v
+COMM_OBJS+=cores/bin2bcd/reg_msb.v
+
+
 
 OBJS =  SOC.v
 OBJS += cores/bram/bram.v

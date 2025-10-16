@@ -8,15 +8,15 @@ BRAM             0x0000000000000000 0x0000000000004000 xrw
 Linker script and memory map
 
 
-everything      0x0000000000000000       0x52
+everything      0x0000000000000000       0x4e
                 0x0000000000000000                . = ALIGN (0x4)
- mult_32.o(.text)
- .text          0x0000000000000000       0x38 mult_32.o
-                0x0000000000000008                mult_hw
+ bin2bcd.o(.text)
+ .text          0x0000000000000000       0x34 bin2bcd.o
+                0x0000000000000008                sqrt_hw
  *(.*)
- .data          0x0000000000000038        0x0 mult_32.o
- .bss           0x0000000000000038        0x0 mult_32.o
+ .data          0x0000000000000034        0x0 bin2bcd.o
+ .bss           0x0000000000000034        0x0 bin2bcd.o
  .riscv.attributes
-                0x0000000000000038       0x1a mult_32.o
-LOAD mult_32.o
+                0x0000000000000034       0x1a bin2bcd.o
+LOAD bin2bcd.o
 OUTPUT(firmware.elf elf32-littleriscv)
