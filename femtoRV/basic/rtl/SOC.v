@@ -130,7 +130,7 @@ module SOC (
         7'b0010000: mem_rdata = sqrt_dout;
         7'b0001000: mem_rdata = mult_dout;
         7'b0000100: mem_rdata = div_dout;
-//        7'b0000010: mem_rdata = bin2bcd_dout;
+        7'b0000010: mem_rdata = bin2bcd_dout;
         7'b0000001: mem_rdata = RAM_rdata;
       endcase
   end
