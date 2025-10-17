@@ -50,6 +50,9 @@ COMM_OBJS+=cores/bin2bcd/perip_bin2bcd.v
 COMM_OBJS+=cores/bin2bcd/lsr4.v
 COMM_OBJS+=cores/bin2bcd/reg_msb.v
 
+COMM_OBJS+=cores/bcd2bin/bin2bcd.v
+COMM_OBJS+=cores/bcd2bin/perip_bin2bcd.v
+COMM_OBJS+=cores/bcd2bin/lsr4.v
 
 
 OBJS =  SOC.v

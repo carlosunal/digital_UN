@@ -103,6 +103,19 @@ module SOC (
 	);
 
 
+	peripheral_bcd2bin bcd2bin0 (
+      .clk(clk),
+      .reset(!reset),
+      .d_in(mem_wdata[15:0]),
+      .cs(cs[1]),
+      .addr(mem_addr[4:0]), // 4 LSB from j1_io_addr
+      .rd(rd),
+      .wr(wr),
+      .d_out(bin2bcd_dout)
+	);
+
+
+
   // ============== Chip_Select (Addres decoder) ======================== 
   // se hace con los 8 bits mas significativos de mem_addr
   // Se asigna el rango de la memoria de programa 0x00000000 - 0x003FFFFF
