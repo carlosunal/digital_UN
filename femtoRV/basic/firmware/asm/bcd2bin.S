@@ -1,4 +1,4 @@
-.equ SQRT_BASE,   0x440000  
+.equ SQRT_BASE,   0x460000  
 .equ SQRT_OP_A,   0x04
 .equ SQRT_INIT,   0x0C
 .equ SQRT_RESULT, 0x10

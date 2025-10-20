@@ -9,7 +9,7 @@
 
 # a0
 
-li   a0, 169   # se debe quitar después de la prueba
+#li   a0, 169   # se debe quitar después de la prueba
 
 sqrt_hw:
   li   gp, SQRT_BASE 

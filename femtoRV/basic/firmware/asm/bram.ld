@@ -6,7 +6,7 @@ SECTIONS
     everything :
     {
         . = ALIGN(4);
-        bin2bcd.o (.text)
+        calculator.o (.text)
         *(.*)
     } >BRAM
 }

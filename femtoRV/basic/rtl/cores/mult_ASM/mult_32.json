@@ -433,7 +433,7 @@
             "Y_WIDTH": "00000000000000000000000000000001"
           },
           "attributes": {
-            "src": "control_mult.v:85.18-85.25"
+            "src": "control_mult.v:85.18-85.26"
           },
           "port_directions": {
             "A": "input",
@@ -442,7 +442,7 @@
           },
           "connections": {
             "A": [ 15, 16, 17, 18 ],
-            "B": [ "1", "0", "0", "1" ],
+            "B": [ "0", "1", "1", "1" ],
             "Y": [ 28 ]
           }
         },
@@ -1051,7 +1051,7 @@
             "WIDTH": "00000000000000000000000000000011"
           },
           "attributes": {
-            "src": "control_mult.v:85.17-85.40"
+            "src": "control_mult.v:85.17-85.41"
           },
           "port_directions": {
             "A": "input",
@@ -1205,7 +1205,7 @@
           "hide_name": 1,
           "bits": [ 28 ],
           "attributes": {
-            "src": "control_mult.v:85.18-85.25"
+            "src": "control_mult.v:85.18-85.26"
           }
         },
         "$procmux$100_CMP": {
@@ -1242,7 +1242,7 @@
           "hide_name": 1,
           "bits": [ 59, 60, 61 ],
           "attributes": {
-            "src": "control_mult.v:85.17-85.40"
+            "src": "control_mult.v:85.17-85.41"
           }
         },
         "add": {
@@ -1329,10 +1329,10 @@
         }
       }
     },
-    "lsr": {
+    "lsr_mult": {
       "attributes": {
-        "hdlname": "lsr",
-        "src": "lsr.v:1.1-17.10"
+        "hdlname": "lsr_mult",
+        "src": "lsr_mult.v:1.1-17.10"
       },
       "ports": {
         "clk": {
@@ -1365,7 +1365,7 @@
             "WIDTH": "00000000000000000000000000100000"
           },
           "attributes": {
-            "src": "lsr.v:8.1-15.7"
+            "src": "lsr_mult.v:8.1-15.7"
           },
           "port_directions": {
             "CLK": "input",
@@ -1386,7 +1386,7 @@
           },
           "attributes": {
             "full_case": "00000000000000000000000000000001",
-            "src": "lsr.v:13.8-13.13|lsr.v:13.5-14.21"
+            "src": "lsr_mult.v:13.8-13.13|lsr_mult.v:13.5-14.21"
           },
           "port_directions": {
             "A": "input",
@@ -1409,7 +1409,7 @@
           },
           "attributes": {
             "full_case": "00000000000000000000000000000001",
-            "src": "lsr.v:9.6-9.10|lsr.v:9.3-15.7"
+            "src": "lsr_mult.v:9.6-9.10|lsr_mult.v:9.3-15.7"
           },
           "port_directions": {
             "A": "input",
@@ -1430,49 +1430,49 @@
           "hide_name": 1,
           "bits": [ 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84 ],
           "attributes": {
-            "src": "lsr.v:8.1-15.7"
+            "src": "lsr_mult.v:8.1-15.7"
           }
         },
         "$2\\s_A[31:0]": {
           "hide_name": 1,
           "bits": [ 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116 ],
           "attributes": {
-            "src": "lsr.v:8.1-15.7"
+            "src": "lsr_mult.v:8.1-15.7"
           }
         },
         "clk": {
           "hide_name": 0,
           "bits": [ 2 ],
           "attributes": {
-            "src": "lsr.v:2.9-2.12"
+            "src": "lsr_mult.v:2.9-2.12"
           }
         },
         "in_A": {
           "hide_name": 0,
           "bits": [ 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 ],
           "attributes": {
-            "src": "lsr.v:3.15-3.19"
+            "src": "lsr_mult.v:3.15-3.19"
           }
         },
         "load": {
           "hide_name": 0,
           "bits": [ 20 ],
           "attributes": {
-            "src": "lsr.v:4.9-4.13"
+            "src": "lsr_mult.v:4.9-4.13"
           }
         },
         "s_A": {
           "hide_name": 0,
           "bits": [ 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52 ],
           "attributes": {
-            "src": "lsr.v:6.20-6.23"
+            "src": "lsr_mult.v:6.20-6.23"
           }
         },
         "shift": {
           "hide_name": 0,
           "bits": [ 19 ],
           "attributes": {
-            "src": "lsr.v:5.9-5.14"
+            "src": "lsr_mult.v:5.9-5.14"
           }
         }
       }
@@ -1590,12 +1590,12 @@
         },
         "lsr0": {
           "hide_name": 0,
-          "type": "lsr",
+          "type": "lsr_mult",
           "parameters": {
           },
           "attributes": {
             "module_not_derived": "00000000000000000000000000000001",
-            "src": "mult_32.v:21.7-21.77"
+            "src": "mult_32.v:21.12-21.82"
           },
           "port_directions": {
             "clk": "input",

@@ -9,8 +9,8 @@
 .globl mult_hw
 # a0 * a1
 
-li a0, 122     #  colocar como comentario después de la prueba
-li a1, 144     #  colocar como comentario después de la prueba
+#li a0, 122     #  colocar como comentario después de la prueba
+#li a1, 144     #  colocar como comentario después de la prueba
   
 mult_hw:
   li   gp, MULT_BASE 
