@@ -1,4 +1,5 @@
 #   run make TOP=SOC or make TOP=SOC_flash
+#   minicom -b 1000000 -D /dev/ttyACM0    #PARA la ICESugar-Pro corriendo Linux 
 EFINITY_HOME  = /home/carlos/Embedded/efinity/2023.2/
 EFXPT_HOME    = $(EFINITY_HOME)/pt
 

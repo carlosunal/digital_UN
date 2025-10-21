@@ -105,7 +105,7 @@ always @(*) begin
     SHIFT_DEC: begin
       done   = 0; 
       ld_tmp = 0; 
-      r0     = r0; 
+      r0     = 0;   // OJO
       sh     = 1; 
       ld     = 0; 
       lda2   = 0; 
@@ -140,6 +140,15 @@ always @(*) begin
 
     END1: begin
       done   = 1; 
+      ld_tmp = 0; 
+      r0     = 0; 
+      sh     = 0; 
+      ld     = 0; 
+      lda2   = 0; 
+    end
+
+    default: begin
+      done   = 0; 
       ld_tmp = 0; 
       r0     = 0; 
       sh     = 0; 

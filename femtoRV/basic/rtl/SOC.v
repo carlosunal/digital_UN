@@ -78,7 +78,7 @@ module SOC (
       .rd (rd), 
       .wr(wr), 
       .d_out (div_dout) );
-/*
+
    peripheral_sqrt sqrt1(
       .clk(clk) ,
       .reset (!resetn),
@@ -88,7 +88,7 @@ module SOC (
       .rd (rd),
       .wr (wr),
       .d_out (sqrt_dout) );
-*/
+
    peripheral_bin2bcd bin2bcd0 (
       .clk(clk),
       .reset(!reset),
