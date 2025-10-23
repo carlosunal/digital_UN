@@ -1,18 +1,18 @@
 `timescale 1ns / 1ps
 
 `define SIMULATION
-module peripheral_bin2bcd_TB;
+module peripheral_bcd2bin_TB;
    reg clk;
    reg  reset;
    reg  start;
-   reg [15:0]d_in;
+   reg [19:0]d_in;
    reg cs;
    reg [4:0]addr;
    reg rd;
    reg wr;
    wire [31:0]d_out;
 
-	peripheral_bin2bcd uut (
+	peripheral_bcd2bin uut (
       .clk(clk),
       .reset(reset),
       .d_in(d_in),
@@ -42,7 +42,7 @@ module peripheral_bin2bcd_TB;
      #(PERIOD*4)
      // A operator
 	  cs=1; rd=0; wr=1;
-	  d_in = 16'hCAFE;
+	  d_in = 20'h12345;
 	  addr = 16'h0004;
      #(PERIOD)
      cs=0; rd=0; wr=0;
@@ -55,16 +55,16 @@ module peripheral_bin2bcd_TB;
 	  addr = 16'h000C;
      #(PERIOD)
      cs=0; rd=0; wr=0;
-     @ (posedge peripheral_bin2bcd_TB.uut.bin2bcd0.done);
+     @ (posedge peripheral_bcd2bin_TB.uut.bcd2bin0.done);
      // read done
      cs=1; rd=1; wr=0;
-     addr = 16'h0010;
+     addr = 16'h0014;
      #(PERIOD)
      cs=0; rd=0; wr=0;
      #(PERIOD)
      // read data	
      cs=1; rd=1; wr=0;
-     addr = 16'h0014;
+     addr = 16'h0010;
      #(PERIOD);
      cs=0; rd=0; wr=0;
      #(PERIOD*30);   
@@ -73,8 +73,8 @@ module peripheral_bin2bcd_TB;
 	 
 
    initial begin: TEST_CASE
-     $dumpfile("perip_bin2bcd_TB.vcd");
-     $dumpvars(-1, peripheral_bin2bcd_TB);
+     $dumpfile("perip_bcd2bin_TB.vcd");
+     $dumpvars(-1, peripheral_bcd2bin_TB);
      #(PERIOD*100) $finish;
    end
 

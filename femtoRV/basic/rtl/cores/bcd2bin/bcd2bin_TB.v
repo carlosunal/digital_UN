@@ -17,7 +17,7 @@ module bcd2bin_TB;
    reg [20:0] i;
 
    initial begin  // Initialize Inputs
-      clk = 0; rst = 0; start = 0; A = 20'h16832;
+      clk = 0; rst = 0; start = 0; A = 20'h35789;
    end
    initial  begin  // Process for clk
      #OFFSET;

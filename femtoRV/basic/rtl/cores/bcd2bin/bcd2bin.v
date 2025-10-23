@@ -4,7 +4,7 @@ module bcd2bin(clk , rst , init , A , result , done);
   input         clk;
   input         init;
   input  [19:0] A;
-  output [16:0] result;
+  output [15:0] result;
   output        done;
 
   wire w_sh;
@@ -25,9 +25,8 @@ module bcd2bin(clk , rst , init , A , result , done);
   wire [19:0] w_MUX;
 
   assign w_MSB ={ w_ld_in[19], w_ld_in[15], w_ld_in[11], w_ld_in[7], w_ld_in[3] };
-  assign result = {w_dmi, w_umi, w_cen, w_dec, w_uni};
 
-  rsr4 rsr40        ( .clk(clk), .rst_ld(w_ld), .shift(w_sh), .lda2(w_LD), .in_R1(A), .in_R2(w_ld_in), .out_R({w_dmi, w_umi, w_cen, w_dec, w_uni}) );
+  rsr4 rsr40        ( .clk(clk), .rst_ld(w_ld), .shift(w_sh), .lda2(w_LD), .in_R1(A), .in_R2(w_ld_in), .out_R({w_dmi, w_umi, w_cen, w_dec, w_uni}), .out_R2(result) );
   mux mux0          ( .in1(4'b1101), .in2(4'b1011), .out(w_MUX[3:0]),   .sel(w_sel) );
   mux mux1          ( .in1(4'b1101), .in2(4'b1011), .out(w_MUX[7:4]),   .sel(w_sel) );
   mux mux2          ( .in1(4'b1101), .in2(4'b1011), .out(w_MUX[11:8]),  .sel(w_sel) );

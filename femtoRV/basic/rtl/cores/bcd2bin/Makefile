@@ -7,7 +7,7 @@ OBJS     = add_sub_c2.v bcd2bin.v count.v ctrl_b2b.v rsr4.v mux2.v reg_msb.v
 SIM_OBJS =  ../../verilog_model/sky130_fd_sc_hd.v
 SIM_OBJS += ../../verilog_model/primitives.v
 
-PER_OBJS = perip_bin2bcd.v $(OBJS)
+PER_OBJS = perip_bcd2bin.v $(OBJS)
 
 BUILD_DIR = build
 

@@ -1,4 +1,4 @@
-module rsr4 (clk, rst_ld, shift, lda2, in_R1, in_R2, out_R);
+module rsr4 (clk, rst_ld, shift, lda2, in_R1, in_R2, out_R, out_R2);
 
    input         clk;
    input         rst_ld;
@@ -7,10 +7,12 @@ module rsr4 (clk, rst_ld, shift, lda2, in_R1, in_R2, out_R);
    input  [19:0] in_R1;
    input  [19:0] in_R2;
    output [19:0] out_R;
+   output [15:0] out_R2;
 
    reg [35:0]  data;
 
-assign out_R = data[15:0];
+assign out_R  = data[35:16];
+assign out_R2 = data[15:0];
 
 always @(negedge clk)
   if(rst_ld) begin
