@@ -3,7 +3,7 @@ TOP=mult_32
 
 ICE40_SIM_CELLS=$(shell yosys-config --datdir/ecp5/cells_sim.v)
 
-OBJS     = mult_32.v acc.v  comp.v  control_mult.v  lsr.v rsr.v
+OBJS     = mult_32.v acc.v  comp.v  control_mult.v  lsr_mult.v rsr.v
 SIM_OBJS =  ../../verilog_model/sky130_fd_sc_hd.v
 SIM_OBJS += ../../verilog_model/primitives.v
 

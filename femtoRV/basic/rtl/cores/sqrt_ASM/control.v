@@ -30,6 +30,7 @@ module control_sqrt( clk , rst , init, msb, z, done, ld_tmp, r0, sh, ld, lda2);
 always @(posedge clk) begin
   if (rst) begin
     state = START;
+    count = 0;
   end else begin
   case(state)
 
@@ -71,7 +72,8 @@ always @(posedge clk) begin
     end
 
     END1: begin
-      state = START;
+      count = count + 1;
+      state = (count>9) ? START : END1;
     end
 
     default: state = START;
@@ -103,7 +105,7 @@ always @(*) begin
     SHIFT_DEC: begin
       done   = 0; 
       ld_tmp = 0; 
-      r0     = r0; 
+      r0     = 0;   // OJO
       sh     = 1; 
       ld     = 0; 
       lda2   = 0; 
@@ -138,6 +140,15 @@ always @(*) begin
 
     END1: begin
       done   = 1; 
+      ld_tmp = 0; 
+      r0     = 0; 
+      sh     = 0; 
+      ld     = 0; 
+      lda2   = 0; 
+    end
+
+    default: begin
+      done   = 0; 
       ld_tmp = 0; 
       r0     = 0; 
       sh     = 0; 

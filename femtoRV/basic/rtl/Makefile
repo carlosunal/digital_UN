@@ -1,4 +1,5 @@
 #   run make TOP=SOC or make TOP=SOC_flash
+#   minicom -b 1000000 -D /dev/ttyACM0    #PARA la ICESugar-Pro corriendo Linux 
 EFINITY_HOME  = /home/carlos/Embedded/efinity/2023.2/
 EFXPT_HOME    = $(EFINITY_HOME)/pt
 
@@ -16,10 +17,44 @@ ICE40_SIM_CELLS=$(shell yosys-config --datdir/ice40/cells_sim.v)
 COMM_OBJS= cores/cpu/femtorv32_quark_V2.v
 COMM_OBJS+= cores/uart/perip_uart.v
 COMM_OBJS+= cores/uart/uart.v
-COMM_OBJS+= cores/mult/perip_mult.v
-COMM_OBJS+= cores/mult/mult.v
+
+
+
+COMM_OBJS+= cores/mult_ASM/perip_mult.v
+COMM_OBJS+= cores/mult_ASM/mult_32.v
+COMM_OBJS+= cores/mult_ASM/acc.v
+COMM_OBJS+= cores/mult_ASM/comp.v
+COMM_OBJS+= cores/mult_ASM/lsr_mult.v
+COMM_OBJS+= cores/mult_ASM/control_mult.v
+COMM_OBJS+= cores/mult_ASM/rsr.v
+
+
 COMM_OBJS+= cores/div/perip_div.v
 COMM_OBJS+= cores/div/div.v
+
+
+COMM_OBJS+= cores/sqrt_ASM/addc2.v
+COMM_OBJS+= cores/sqrt_ASM/count.v
+COMM_OBJS+= cores/sqrt_ASM/lsr.v 
+COMM_OBJS+= cores/sqrt_ASM/perip_sqrt.v
+COMM_OBJS+= cores/sqrt_ASM/sqrt.v
+COMM_OBJS+= cores/sqrt_ASM/lsr2.v
+COMM_OBJS+= cores/sqrt_ASM/control.v
+
+
+COMM_OBJS+=cores/bin2bcd/add_sub_c2.v
+COMM_OBJS+=cores/bin2bcd/bin2bcd.v
+COMM_OBJS+=cores/bin2bcd/mux2.v
+COMM_OBJS+=cores/bin2bcd/count.v
+COMM_OBJS+=cores/bin2bcd/ctrl_b2b.v  
+COMM_OBJS+=cores/bin2bcd/perip_bin2bcd.v
+COMM_OBJS+=cores/bin2bcd/lsr4.v
+COMM_OBJS+=cores/bin2bcd/reg_msb.v
+
+COMM_OBJS+=cores/bcd2bin/bcd2bin.v
+COMM_OBJS+=cores/bcd2bin/perip_bcd2bin.v
+COMM_OBJS+=cores/bcd2bin/rsr4.v
+
 
 OBJS =  SOC.v
 OBJS += cores/bram/bram.v
@@ -66,10 +101,11 @@ sim_verilator:
 sim_post_syn_quark:  $(OBJS)
 	rm -f *vpp
 
-#	yosys -v3 -p  'abc -dff; read_verilog $(OBJS); abc -keepff ;  synth_ecp5  -top $(TARGET); write_verilog $(TOP)_synth.v' -l ${TARGET}.rpt
-#	iverilog -g2012 -DSYNTH -o $@_PS.vpp -s bench  bench_quark.v $(TOP)_synth.v $(ECP5_SIM_CELLS)
-	yosys -v3  -p ' read_verilog $(OBJS);  synth_ice40  -top $(TARGET); write_verilog $(TOP)_synth.v' -l ${TARGET}.rpt
-	iverilog -g2012 -DSYNTH -o $@_PS.vpp -s bench  bench_quark.v $(TOP)_synth.v $(ICE40_SIM_CELLS)
+#	         yosys -v3 -p  'abc -dff; read_verilog $(OBJS); abc -keepff ;  synth_ecp5  -top $(TARGET); write_verilog $(TOP)_synth.v' -l ${TARGET}.rpt
+	yosys -v3 -l synth.log -p ' synth_ecp5 -top $(TOP) -json $(TOP).json; write_verilog -attr2comment $(TOP)_synth.v' ${OBJS}
+	iverilog -g2012 -DSYNTH -o $@_PS.vpp -s bench  bench_quark.v $(TOP)_synth.v $(ECP5_SIM_CELLS)
+#	yosys -v3  -p ' read_verilog $(OBJS);  synth_ice40  -top $(TARGET); write_verilog $(TOP)_synth.v' -l ${TARGET}.rpt
+#	iverilog -g2012 -DSYNTH -o $@_PS.vpp -s bench  bench_quark.v $(TOP)_synth.v $(ICE40_SIM_CELLS)
 
 	vvp $@_PS.vpp
 	gtkwave bench.vcd &
@@ -105,10 +141,10 @@ $(TARGET).json: $(OBJS)
 $(TARGET).bit: $(TARGET)_out.config
 	ecppack --bootaddr 0 --compress $(BUILD_DIR)/$< --svf $(BUILD_DIR)/${TARGET}.svf --bit $(BUILD_DIR)/$@
 
-configure_lattice: ${TARGET}.bit   # TDI:TDO:TCK:TMS
-#	sudo openFPGALoader -c ft232RL --pins=1:2:0:3 -m ${TARGET}.bit 	
-	sudo openFPGALoader -c ft232RL --pins=RXD:RTS:TXD:CTS -m $(BUILD_DIR)/${TARGET}.bit 	
-	
+configure_lattice: ${TARGET}.bit   # TDI:TDO:TCK:TMS TXD:CTS:DTR:RXD
+#	sudo openFPGALoader -c ft232RL --pins=0:3:4:1 -m $(BUILD_DIR)/${TARGET}.bit 	
+#	sudo openFPGALoader -c ft232RL --pins=RXD:RTS:TXD:CTS -m $(BUILD_DIR)/${TARGET}.bit 	
+	sudo openFPGALoader -c ft232RL --pins=TXD:CTS:DTR:RXD -m $(BUILD_DIR)/${TARGET}.bit	
 ########################
 #  LATTICE COLORLIGHT I5
 ########################
@@ -124,6 +160,43 @@ $(TARGET)_i5.bit: $(TARGET)_i5_out.config
 
 configure_i5: ${TARGET}_i5.bit   # TDI:TDO:TCK:TMS
 	sudo openFPGALoader -b colorlight-i5 -m $(BUILD_DIR)/${TARGET}_i5.bit 
+
+.PHONY: clean
+
+########################
+#  LATTICE SUGAR-PRO v1.3
+########################
+$(TARGET)_sugar.json: $(OBJS)
+	mkdir -p $(BUILD_DIR)
+	yosys -p 'verilog_defaults -push; verilog_defaults -add -defer; read_verilog -formal $(OBJS); verilog_defaults -pop; attrmap -tocase keep -imap keep="true" keep=1 -imap keep="false" keep=0 -remove keep=0; synth_ecp5 -top $(TARGET); write_json $(BUILD_DIR)/$@' -l $(BUILD_DIR)/${TARGET}.rpt
+
+$(TARGET)_sugar_out.config: $(TARGET)_sugar.json
+	nextpnr-ecp5 --json $(BUILD_DIR)/$< --lpf $(TARGET)_sugar.lpf --textcfg $(BUILD_DIR)/$@ --25k --package CABGA256 --speed 6  --timing-allow-fail --seed 1 --lpf-allow-unconstrained
+
+$(TARGET)_sugar.bit: $(TARGET)_sugar_out.config
+	ecppack --bootaddr 0 --compress $(BUILD_DIR)/$< --svf $(BUILD_DIR)/${TARGET}.svf --bit $(BUILD_DIR)/$@
+
+configure_sugar: ${TARGET}_sugar.bit   # TDI:TDO:TCK:TMS
+	sudo openFPGALoader -b colorlight-i5 -m $(BUILD_DIR)/${TARGET}_sugar.bit 
+
+
+
+########################
+#  LATTICE COLORLIGHT I9
+########################
+$(TARGET)_i9.json: $(OBJS)
+	mkdir -p $(BUILD_DIR)
+	yosys -p 'verilog_defaults -push; verilog_defaults -add -defer; read_verilog -formal $(OBJS); verilog_defaults -pop; attrmap -tocase keep -imap keep="true" keep=1 -imap keep="false" keep=0 -remove keep=0; synth_ecp5 -top $(TARGET); write_json $(BUILD_DIR)/$@' -l $(BUILD_DIR)/${TARGET}.rpt
+
+$(TARGET)_i9_out.config: $(TARGET)_i9.json
+	nextpnr-ecp5 --json $(BUILD_DIR)/$< --lpf $(TARGET)_i9.lpf --textcfg $(BUILD_DIR)/$@ --45k --package CABGA381 --speed 6  --timing-allow-fail --seed 1 --lpf-allow-unconstrained
+
+$(TARGET)_i9.bit: $(TARGET)_i9_out.config
+	ecppack --bootaddr 0 --compress $(BUILD_DIR)/$< --svf $(BUILD_DIR)/${TARGET}.svf --bit $(BUILD_DIR)/$@
+
+configure_i9: ${TARGET}_i9.bit   # TDI:TDO:TCK:TMS
+	sudo openFPGALoader -b colorlight-i9 -m $(BUILD_DIR)/${TARGET}_i9.bit 
+
 
 .PHONY: clean
 

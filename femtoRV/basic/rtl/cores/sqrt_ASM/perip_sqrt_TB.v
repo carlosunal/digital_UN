@@ -55,17 +55,16 @@ module peripheral_sqrt_TB;
 	  addr = 16'h000C;
      #(PERIOD)
      cs=0; rd=0; wr=0;
-     #(PERIOD*17)
      @ (posedge peripheral_sqrt_TB.uut.sqrt0.done);
      // read done
      cs=1; rd=1; wr=0;
-     addr = 16'h0010;
+     addr = 16'h0014;
      #(PERIOD)
      cs=0; rd=0; wr=0;
      #(PERIOD)
      // read data	
      cs=1; rd=1; wr=0;
-     addr = 16'h0014;
+     addr = 16'h0010;
      #(PERIOD);
      cs=0; rd=0; wr=0;
      #(PERIOD*30);   

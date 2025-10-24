@@ -53,12 +53,10 @@ always @(posedge clk) begin//-------------------- escritura de registros
 end//------------------------------------------- escritura de registros
 
 
-//always @(posedge clk) begin//-----------------------mux_4 :  multiplexa salidas del periferico
-always @(*) begin//-----------------------mux_4 :  multiplexa salidas del periferico
-
-//  if(reset)
-//    d_out = 0;
-//  else 
+always @(posedge clk) begin//-----------------------mux_4 :  multiplexa salidas del periferico
+  if(reset)
+    d_out = 0;
+  else 
   if (cs) begin
     case (s[4:0])
       5'b01000: d_out    =  result;            

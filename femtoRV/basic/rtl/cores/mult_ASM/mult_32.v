@@ -18,7 +18,7 @@ module mult_32(clk , rst , init , A , B , pp , done);
   
  
   rsr rsr0 (.clk(clk), .in_B(B) , .shift(w_sh) , .load(w_reset) , .s_B(w_B));
-  lsr lsr0 (.clk(clk), .in_A(A) , .shift(w_sh) , .load(w_reset) , .s_A(w_A));
+  lsr_mult lsr0 (.clk(clk), .in_A(A) , .shift(w_sh) , .load(w_reset) , .s_A(w_A));
   comp comp0(.B(w_B), .z(w_z));
   acc acc0 (.clk(clk), .A(w_A) , .add(w_add), .rst(w_reset), .pp(pp));
   control_mult control0 (.clk(clk), .rst(rst) , .lsb_B(w_B[0]) , .init(init) , .z(w_z) , .done(done) , .sh(w_sh) , .reset(w_reset) , .add(w_add) );

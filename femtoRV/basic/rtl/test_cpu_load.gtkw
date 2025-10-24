@@ -1,25 +1,29 @@
 [*]
-[*] GTKWave Analyzer v3.3.104 (w)1999-2020 BSI
-[*] Thu May 22 13:27:56 2025
+[*] GTKWave Analyzer v3.3.121 (w)1999-2024 BSI
+[*] Fri Oct 17 20:19:07 2025
 [*]
-[dumpfile] "/Work/Proyects/ecb_T8_T113/femtoRV/basic/rtl/bench.vcd"
-[dumpfile_mtime] "Thu May 22 13:00:14 2025"
-[dumpfile_size] 97215352
-[savefile] "/Work/Proyects/ecb_T8_T113/femtoRV/basic/rtl/test_cpu_load.gtkw"
-[timestart] 3635900
-[size] 2560 1531
-[pos] -67 -67
-*-16.770798 3635980 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[dumpfile] "/Work/Embedded/digital_UN/femtoRV/basic/rtl/bench.vcd"
+[dumpfile_mtime] "Fri Oct 17 20:12:37 2025"
+[dumpfile_size] 28530109
+[savefile] "/Work/Embedded/digital_UN/femtoRV/basic/rtl/test_cpu_load.gtkw"
+[timestart] 0
+[size] 1648 951
+[pos] -1 -1
+*-8.770798 1079 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] bench.
 [treeopen] bench.uut.
+[treeopen] bench.uut.bcd2bin0.
+[treeopen] bench.uut.bcd2bin0.bcd2bin0.
+[treeopen] bench.uut.bin2bcd0.
 [treeopen] bench.uut.CPU.
 [treeopen] bench.uut.div1.
 [treeopen] bench.uut.mult1.
 [treeopen] bench.uut.per_uart.
+[treeopen] bench.uut.sqrt1.
 [sst_width] 462
 [signals_width] 346
 [sst_expanded] 1
-[sst_vpaned_height] 937
+[sst_vpaned_height] 608
 @28
 bench.uut.resetn
 @c00028
@@ -193,7 +197,6 @@ bench.uut.CPU.aluOut[31:0]
 @28
 [color] 3
 bench.uut.RXD
-@29
 [color] 3
 bench.uut.TXD
 @820
@@ -202,7 +205,6 @@ bench.uut.per_uart.uart0.tx_data[7:0]
 @28
 bench.uut.per_uart.cs
 @22
-bench.uut.cs[6:0]
 bench.uut.per_uart.d_in[31:0]
 @28
 bench.uut.per_uart.uart0.tx_wr
@@ -305,10 +307,12 @@ bench.uut.CPU.\registerFile[7][31:0]
 bench.uut.CPU.\registerFile[8][31:0]
 [color] 2
 bench.uut.CPU.\registerFile[9][31:0]
+@24
 [color] 2
 bench.uut.CPU.\registerFile[10][31:0]
 [color] 2
 bench.uut.CPU.\registerFile[11][31:0]
+@22
 [color] 2
 bench.uut.CPU.\registerFile[12][31:0]
 [color] 2
@@ -342,25 +346,118 @@ bench.uut.mult1.wr
 bench.uut.mult1.mult1.init
 @22
 bench.uut.mult1.mult1.B[15:0]
-@820
-bench.uut.mult1.mult1.state_name[320:1]
 @28
 bench.uut.mult1.mult1.done
-@22
-bench.uut.mult1.mult1.result[31:0]
-@28
 bench.uut.LEDS
 bench.uut.div1.cs
 @22
+bench.uut.mult1.mult1.pp[31:0]
 bench.uut.div1.A[15:0]
 bench.uut.div1.B[15:0]
+bench.uut.mult1.s[4:0]
 @20000
 -
 @28
 bench.uut.div1.rd
 bench.uut.div1.done
 @22
-bench.uut.div1.result[31:0]
-bench.uut.div1.d_out[31:0]
+bench.uut.mult1.d_out[31:0]
+bench.uut.mult1.result[31:0]
+@200
+-
+-SQRT
+@24
+bench.uut.sqrt1.A[15:0]
+@c00022
+bench.uut.sqrt1.addr[4:0]
+@28
+(0)bench.uut.sqrt1.addr[4:0]
+(1)bench.uut.sqrt1.addr[4:0]
+(2)bench.uut.sqrt1.addr[4:0]
+(3)bench.uut.sqrt1.addr[4:0]
+(4)bench.uut.sqrt1.addr[4:0]
+@1401200
+-group_end
+@28
+bench.uut.sqrt1.cs
+bench.uut.sqrt1.wr
+bench.uut.sqrt1.rd
+bench.uut.sqrt1.init
+bench.uut.sqrt1.done
+@22
+bench.uut.sqrt1.result[15:0]
+@200
+-
+-BCD2BIN
+@c00022
+bench.uut.bcd2bin0.A[19:0]
+@28
+(0)bench.uut.bcd2bin0.A[19:0]
+(1)bench.uut.bcd2bin0.A[19:0]
+(2)bench.uut.bcd2bin0.A[19:0]
+(3)bench.uut.bcd2bin0.A[19:0]
+(4)bench.uut.bcd2bin0.A[19:0]
+(5)bench.uut.bcd2bin0.A[19:0]
+(6)bench.uut.bcd2bin0.A[19:0]
+(7)bench.uut.bcd2bin0.A[19:0]
+(8)bench.uut.bcd2bin0.A[19:0]
+(9)bench.uut.bcd2bin0.A[19:0]
+(10)bench.uut.bcd2bin0.A[19:0]
+(11)bench.uut.bcd2bin0.A[19:0]
+(12)bench.uut.bcd2bin0.A[19:0]
+(13)bench.uut.bcd2bin0.A[19:0]
+(14)bench.uut.bcd2bin0.A[19:0]
+(15)bench.uut.bcd2bin0.A[19:0]
+(16)bench.uut.bcd2bin0.A[19:0]
+(17)bench.uut.bcd2bin0.A[19:0]
+(18)bench.uut.bcd2bin0.A[19:0]
+(19)bench.uut.bcd2bin0.A[19:0]
+@1401202
+-group_end
+@22
+bench.uut.bcd2bin0.addr[4:0]
+@28
+bench.uut.bcd2bin0.cs
+bench.uut.bcd2bin0.wr
+bench.uut.bcd2bin0.rd
+bench.uut.bcd2bin0.init
+bench.uut.bcd2bin0.done
+@c00022
+bench.uut.bcd2bin0.result[15:0]
+@28
+(0)bench.uut.bcd2bin0.result[15:0]
+(1)bench.uut.bcd2bin0.result[15:0]
+(2)bench.uut.bcd2bin0.result[15:0]
+(3)bench.uut.bcd2bin0.result[15:0]
+(4)bench.uut.bcd2bin0.result[15:0]
+(5)bench.uut.bcd2bin0.result[15:0]
+(6)bench.uut.bcd2bin0.result[15:0]
+(7)bench.uut.bcd2bin0.result[15:0]
+(8)bench.uut.bcd2bin0.result[15:0]
+(9)bench.uut.bcd2bin0.result[15:0]
+(10)bench.uut.bcd2bin0.result[15:0]
+(11)bench.uut.bcd2bin0.result[15:0]
+(12)bench.uut.bcd2bin0.result[15:0]
+(13)bench.uut.bcd2bin0.result[15:0]
+(14)bench.uut.bcd2bin0.result[15:0]
+(15)bench.uut.bcd2bin0.result[15:0]
+@1401200
+-group_end
+@23
+bench.uut.bcd2bin0.bcd2bin0.rsr40.data[35:0]
+@200
+-
+-BIN2BCD
+@22
+bench.uut.bin2bcd0.A[15:0]
+bench.uut.bin2bcd0.addr[4:0]
+@28
+bench.uut.bin2bcd0.cs
+bench.uut.bin2bcd0.wr
+bench.uut.bin2bcd0.rd
+bench.uut.bin2bcd0.init
+bench.uut.bin2bcd0.done
+@22
+bench.uut.bin2bcd0.result[19:0]
 [pattern_trace] 1
 [pattern_trace] 0
